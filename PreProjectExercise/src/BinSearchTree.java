@@ -102,7 +102,32 @@ class BinSearchTree {
 			return find(start.left, target_id);
 		return null;
 	}
+	
+	public String toString() {
+		return printBinSearchTree();
+	}
+	
+	public String printBinSearchTree() {
+		if(empty()) {
+			return "No file has been loaded";
+		}	
+		return printTree(root);
+	}
+	
+	public String printTree(Node cur) {
+		String s = "";
 		
+		if (cur.left!=null)
+		s +=	printTree(cur.left);
+		s += cur.data.id+"        "+cur.data.faculty+"     "+
+                                 cur.data.major+ "       "+cur.data.year + "\n";
+		if (cur.right!=null)
+			s += printTree(cur.right);
+		
+		return s;
+	}	
+	
+	
 	/**
 	 * The following function returns a reference to the node that the new node
 	 * must be attached to. Or returns null if such a node does not exist.
