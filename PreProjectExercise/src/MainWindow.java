@@ -6,7 +6,7 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
 
 	
-	JButton insert, find, browse, create; //Buttons for user to interact 
+	JButton insert, find, browse, create; //Buttons for user interaction
 	JPanel buttons; //Panel containing all the buttons 
 	TextArea studentInfo; // Text area containing all the data about students
 	
@@ -14,11 +14,8 @@ public class MainWindow extends JFrame {
 	private JLabel title;
 	private Container c;
 	private BackEnd b;
-//	private CreateFileListener createListener;
-//	private BrowseTreeListener browseListener;
 	
-	
-	
+
 	public MainWindow(String s) { //Constructs a MainWindow object with the required fields
 		super(s);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,17 +37,17 @@ public class MainWindow extends JFrame {
 		create = new JButton("Create Tree From File");
 		
 		//Assign listener to the buttons 
-		browse.addActionListener(b);
-		create.addActionListener(b);
+		browse.addActionListener(b.browseListen);
+		create.addActionListener(b.createListen);
+		find.addActionListener(b.findListen);
+		insert.addActionListener(b.insertListen);
 
-		
 		
 		studentInfo = new TextArea();
 		studentInfo.setEditable(false);
 		scroll = new JScrollPane(studentInfo,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		title = new JLabel("An Application to Maintain Student Records",JLabel.CENTER);
-		
 		
 		
 		//Adding all buttons to the south portion of the frame
