@@ -3,6 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+/**
+ * @author Carter Shaul/Nick Park
+ * @version 1
+ * @since 24/03/2019
+ * The following class is a GUI which manages all functionality associated with a student records database. 
+ */
 public class MainWindow extends JFrame {
 
 	
@@ -10,13 +17,31 @@ public class MainWindow extends JFrame {
 	JPanel buttons; //Panel containing all the buttons 
 	TextArea studentInfo; // Text area containing all the data about students
 	
+	/**
+	 * Scroll bar on the right side of the text area
+	 */
 	private JScrollPane scroll; //Scroll bar within text area
+	
+	/**
+	 * Title of the window displayed to the user
+	 */
 	private JLabel title;
+	
+	/**
+	 * Container handle for the Main Window
+	 */
 	private Container c;
+	
+	/**
+	 * Back end object which implements Action Listener and handles all listeners for the interactive buttons
+	 */
 	private BackEnd b;
 	
-
-	public MainWindow(String s) { //Constructs a MainWindow object with the required fields
+	/**
+	 * Constructs a Main Window object with the necessary fields for user interaction. 
+	 * @param s The title of the main window that is displayed to the user
+	 */
+	public MainWindow(String s) { 
 		super(s);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 				

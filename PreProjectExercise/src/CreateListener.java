@@ -6,25 +6,44 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+/**
+ * @author Carter Shaul/Nick Park
+ * @version 1
+ * @since 24/03/2019
+ * The following class is a listener which handles the functionality of the "Create tree from file" button displayed on the Main Window. 
+ * Loads all necessary data from a user input text file into a binary search tree. 
+ */
 public class CreateListener implements ActionListener{
 
+	/**
+	 * A binary search tree containing all data pertaining to student records.
+	 */
 	private BinSearchTree studentRecords;
 	
-	
+	/**
+	 * Constucts a new object of type CreateListener. 
+	 * @param studentRecords A binary search tree containg all data pertaining to student records.
+	 */
 	public CreateListener(BinSearchTree studentRecords) {
 		this.studentRecords = studentRecords;
 	}
 	
 	
-	@Override
+	/**
+	 * @Override
+	 * Loads all data from a text file into a binary search tree after the button is pressed. 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String fileName = JOptionPane.showInputDialog("Enter the file name: ");
 		createTreeFromFile(fileName);		
 	}
 	
 	
+	/**
+	 * Loads all necessary data from a given text file into a binary search tree. 
+	 * @param fileName The user input file name.
+	 */
 	public void createTreeFromFile(String fileName) { 
-//		studentRecords = new BinSearchTree();
 		try {
 			Scanner scan = new Scanner(new File(fileName));
 		
