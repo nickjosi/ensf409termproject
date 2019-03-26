@@ -36,8 +36,7 @@ public class MainWindow extends JFrame {
 	/**
 	 * Container handle for the Main Window
 	 */
-	private Container c;
-	
+	private Container c;	
 	
 	/**
 	 * Constructs a Main Window object with the necessary fields for user interaction. 
