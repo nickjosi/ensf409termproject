@@ -1,5 +1,6 @@
+//***VIEW**//
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -8,19 +9,24 @@ import javax.swing.*;
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 24/03/2019
- * The following class is a GUI which manages all functionality associated with a student records database. 
+ * The following class is a GUI which displays all functionality associated with a student records database. 
  */
 public class MainWindow extends JFrame {
 
-	
-	JButton insert, find, browse, create; //Buttons for user interaction
-	JPanel buttons; //Panel containing all the buttons 
-	TextArea studentInfo; // Text area containing all the data about students
+	/**
+	 * Buttons for user interaction. 
+	 */
+	private JButton insert, find, browse, create; 
+		
+	/**
+	 * A TextArea object which will display all the student records to the user. 
+	 */
+	JTextArea studentInfo; 
 	
 	/**
 	 * Scroll bar on the right side of the text area
 	 */
-	private JScrollPane scroll; //Scroll bar within text area
+	private JScrollPane scroll; 
 	
 	/**
 	 * Title of the window displayed to the user
@@ -32,10 +38,6 @@ public class MainWindow extends JFrame {
 	 */
 	private Container c;
 	
-	/**
-	 * Back end object which implements Action Listener and handles all listeners for the interactive buttons
-	 */
-	private BackEnd b;
 	
 	/**
 	 * Constructs a Main Window object with the necessary fields for user interaction. 
@@ -43,8 +45,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow(String s) { 
 		super(s);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-				
+		
 		try {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //Set L&F to current OS preferences
 		}
@@ -52,48 +53,71 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 		
-		b = new BackEnd(this);
-			
-		//Declaring all member variables
-		insert = new JButton("Insert");
-		
+
+		studentInfo = new JTextArea(); //Initializing all Member Variables 
+		scroll = new JScrollPane(studentInfo,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		title = new JLabel("An Application to Maintain Student Records",JLabel.CENTER);
+		insert = new JButton("Insert"); 
 		find = new JButton("Find");
 		browse = new JButton("Browse");
 		create = new JButton("Create Tree From File");
+	
 		
-		//Assign listener to the buttons 
-		browse.addActionListener(b.browseListen);
-		create.addActionListener(b.createListen);
-		find.addActionListener(b.findListen);
-		insert.addActionListener(b.insertListen);
-
-		
-		studentInfo = new TextArea();
-		studentInfo.setEditable(false);
-		scroll = new JScrollPane(studentInfo,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		title = new JLabel("An Application to Maintain Student Records",JLabel.CENTER);
-		
-		
-		//Adding all buttons to the south portion of the frame
-		buttons = new JPanel();
-		buttons.add(insert);
+		JPanel buttons = new JPanel();//Create new panel to hold buttons and add them to south portion of frame.
+		buttons.add(insert); 
 		buttons.add(find);
 		buttons.add(browse);
 		buttons.add(create);
 		
-		c = getContentPane();
+		
+		title.setFont(new Font("Helvetica", Font.BOLD, 14));
+		
+		studentInfo.setFont(new Font("SansSerif",Font.ITALIC,12)); //Set JTextArea preferences 
+		studentInfo.setEditable(false); 
+		
+		
+		c = getContentPane(); //Get handle on container and add all components
 		c.add("South",buttons);
 		c.add("Center",scroll);
 		c.add("North",title);
+
 		
-		this.setVisible(true);
-		this.pack();
+		setPreferredSize(new Dimension(600,400)); //Set JFrame preferences
+		pack();
+		setDefaultCloseOperation(EXIT_ON_CLOSE); 
+		setLocationRelativeTo(null);
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		MainWindow frame = new MainWindow("Main Window");
+	/**
+	 * Setting the ActionListener for the Browse button object
+	 * @param browseListener The BrowseListener to be assigned
+	 */
+	public void setBrowseListener(ActionListener browseListener) {
+		browse.addActionListener(browseListener);
 	}
+	
+	/**
+	 * Setting the ActionListener for the Insert button object
+	 * @param insertListener The InsertListener to be assigned
+	 */
+	public void setInsertListener(ActionListener insertListener) {
+		insert.addActionListener(insertListener);
+	}
+	
+	/**
+	 * Setting the ActionListener for the Find button object
+	 * @param findListener The FindListener to be assigned
+	 */
+	public void setFindListener(ActionListener findListener) {
+		find.addActionListener(findListener);
+	}
+	
+	/**
+	 * Setting the ActionListener for the Create button object
+	 * @param createListener The CreateListener to be assigned
+	 */
+	public void setCreateListener(ActionListener createListener) {
+		create.addActionListener(createListener);
+	}
+	
 }

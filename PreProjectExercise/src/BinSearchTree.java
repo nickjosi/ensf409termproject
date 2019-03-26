@@ -1,12 +1,12 @@
+//***MODEL***//
+
 import java.io.*;
 import javax.swing.JOptionPane;
+
 /**
  * The following class called BinSearchTree creates an empty 
  * tree, and allows the user of the class to insert new nodes into the tree.  
  */
-
- 
-
 class BinSearchTree {
 	
 	Node root;
@@ -119,8 +119,8 @@ class BinSearchTree {
 		
 		if (cur.left!=null)
 		s +=	printTree(cur.left);
-		s += cur.data.id+"        "+cur.data.faculty+"     "+
-                                 cur.data.major+ "       "+cur.data.year + "\n";
+		s += cur.data.id+"		"+cur.data.faculty+"		"+
+                                 cur.data.major+ "		"+cur.data.year + "\n";
 		if (cur.right!=null)
 			s += printTree(cur.right);
 		
@@ -160,8 +160,8 @@ class BinSearchTree {
 	public void print_tree(Node cur, PrintWriter out) throws IOException {
 		if (cur.left!=null)
 			print_tree(cur.left,out);
-		String s = cur.data.id+"        "+cur.data.faculty+"     "+
-                                 cur.data.major+ "       "+cur.data.year + "\n";
+		String s = cur.data.id+"        	"+cur.data.faculty+"     	"+
+                                 cur.data.major+ "       	"+cur.data.year + "\n";
 		out.println(s);
 		System.out.println(s);
 		if (cur.right!=null)

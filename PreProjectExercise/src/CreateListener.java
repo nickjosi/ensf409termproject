@@ -21,8 +21,8 @@ public class CreateListener implements ActionListener{
 	private BinSearchTree studentRecords;
 	
 	/**
-	 * Constucts a new object of type CreateListener. 
-	 * @param studentRecords A binary search tree containg all data pertaining to student records.
+	 * Constructs a new object of type CreateListener. 
+	 * @param studentRecords A binary search tree containing all data pertaining to student records.
 	 */
 	public CreateListener(BinSearchTree studentRecords) {
 		this.studentRecords = studentRecords;
