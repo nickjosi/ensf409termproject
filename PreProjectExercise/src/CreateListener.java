@@ -59,7 +59,7 @@ public class CreateListener implements ActionListener{
 			}	
 			scan.close();
 		}
-		catch(IOException e) {
+		catch(IOException | NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "File could not be located", "Error Message",JOptionPane.ERROR_MESSAGE);
 		}
 	}
