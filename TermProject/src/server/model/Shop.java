@@ -34,7 +34,7 @@ public class Shop {
 	}
 	public String decreaseItem (String name) {
 		if (inventory.manageItem(name) == null)
-			return "Couldn't not decrease item quantity!\n";
+			return "Could not decrease item quantity!\n";
 		else
 			return "Item quantity was decreased!\n";
 	}

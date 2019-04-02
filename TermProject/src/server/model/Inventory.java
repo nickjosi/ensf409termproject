@@ -30,7 +30,7 @@ public class Inventory {
 	
 	public Item searchForItem (String name) {
 		for (Item i: itemList) {
-			if (i.getItemName().equals(name))
+			if (i.getItemName().toLowerCase().equals(name.toLowerCase()))
 				return i;
 		}
 		return null;
