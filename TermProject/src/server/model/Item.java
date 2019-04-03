@@ -7,7 +7,7 @@ public class Item {
 	private int itemQuantity;
 	private double itemPrice;
 	private boolean alreadyOrdered;
-	private Supplier theSupplier;
+	private Supplier supplier;
 	private static final int ORDERQUANTITY = 40;
 	private static final int MINIMUMUMBER = 20; 	
 	
@@ -18,7 +18,7 @@ public class Item {
 		itemName = name;
 		itemQuantity = quanitiy;
 		itemPrice = price;
-		sup = theSupplier; 
+		supplier = sup; 
 		setAlreadyOrdered(false);
 	}
 	
@@ -75,11 +75,11 @@ public class Item {
 	}
 	
 	public void setTheSupplier (Supplier sup) {
-		theSupplier = sup;
+		supplier = sup;
 	}
 	
 	public Supplier getTheSupplier () {
-		return theSupplier;
+		return supplier;
 	}
 
 	public boolean isAlreadyOrdered() {

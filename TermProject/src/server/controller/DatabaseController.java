@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import server.model.*;
+import java.sql.*;
 
 /**
  * Receives input from the client, modifies the shop accordingly,
@@ -31,7 +32,9 @@ public class DatabaseController implements Runnable {
 	 * Writes to the socket output stream to communicate with the client.
 	 */
 	private PrintWriter socketOut;
-
+	private Connection conn;
+	private Statement stmt;
+	private ResultSet rs;
 	
 	/**
 	 * Constructs a DatabaseController object for the given socket, and
@@ -42,13 +45,24 @@ public class DatabaseController implements Runnable {
 	 */
 	DatabaseController(Socket s) {
 		socket = s;
+		// Setup socketIn and socketOut to communicate with client
 		try {
 			socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			socketOut = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			System.err.println(e.getStackTrace());
 		} finally {
-			sendString("Connected to a game. Waiting for opponent...");
+			sendString("Connected to the server. Waiting...");
+		}
+		
+		// Initialize connection to database
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo"
+					+ "?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "ensf409");
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		
@@ -68,7 +82,7 @@ public class DatabaseController implements Runnable {
 	}
 
 	/**
-	 * Reads the input file and creates a list of items which represents
+	 * Reads the database and creates a list of items which represents
 	 * the shop's inventory.
 	 * @param suppliers the list of suppliers for the items
 	 * @return the ArrayList of Item objects created from the text file
@@ -78,23 +92,18 @@ public class DatabaseController implements Runnable {
 		ArrayList<Item> items = new ArrayList<Item>();
 
 		try {
-			FileReader fr = new FileReader("items.txt");
-			BufferedReader br = new BufferedReader(fr);
-
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				String[] temp = line.split(";");
-				int supplierId = Integer.parseInt(temp[4]);
-
-				Supplier theSupplier = findSupplier(supplierId, suppliers);
-				if (theSupplier != null) {
-					Item myItem = new Item(Integer.parseInt(temp[0]), temp[1], Integer.parseInt(temp[2]),
-							Double.parseDouble(temp[3]), theSupplier);
-					items.add(myItem);
-					theSupplier.getItemList().add(myItem);
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM inventory";
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				Supplier supplier = findSupplier(rs.getInt("supplierId"), suppliers);
+				if(supplier != null) {
+					Item item = new Item(rs.getInt("itemId"), rs.getString("itemName"), rs.getInt("itemQuantity"), 
+							rs.getDouble("itemPrice"), supplier);
+					items.add(item);
+					supplier.getItemList().add(item);
 				}
-			}
-			br.close();
+			}			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -119,19 +128,20 @@ public class DatabaseController implements Runnable {
 	}
 
 	/**
-	 * Reads the input file and creates a list of suppliers.
+	 * Reads the database and creates a list of suppliers.
 	 * @param suppliers the ArrayList of Supplier objects to be filled.
 	 */
 	private void readSuppliers(ArrayList<Supplier> suppliers) {
 
 		try {
-			FileReader fr = new FileReader("suppliers.txt");
-			BufferedReader br = new BufferedReader(fr);
-
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				String[] temp = line.split(";");
-				suppliers.add(new Supplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]));
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM supplierList";
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				System.out.println(rs.getString("supId") + " " + rs.getString("supName")
+				+ " " + rs.getString("supAddress") + " " + rs.getString("supContactName"));
+				suppliers.add(new Supplier(Integer.parseInt(rs.getString("supId")), rs.getString("supName"), 
+						rs.getString("supAddress"), rs.getString("supContactName")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
