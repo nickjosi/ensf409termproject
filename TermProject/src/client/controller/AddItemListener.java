@@ -2,9 +2,12 @@ package client.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import client.view.MainMenu;
 
 
 /**
@@ -15,10 +18,16 @@ import javax.swing.JTextField;
  * This class provides the necessary methods to allow a user to input the information for a new inventory item by entering data into
  * separate text fields at the click of a button. 
  */
-public class AddItemListener implements ActionListener{
+public class AddItemListener extends GUIController implements ActionListener{
 
 	//TODO Make this method add the item the user inputs to the inventory. If the item already exists or if the item ID's are the same than
 	//inform the user they must re-enter. 
+	
+	public AddItemListener(MainMenu frame, Client user) {
+		super(frame,user);
+		frame.setAddItemListener(this);
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		JTextField idField = new JTextField();
 		JTextField nameField = new JTextField();
@@ -34,4 +43,5 @@ public class AddItemListener implements ActionListener{
 			JOptionPane.showMessageDialog(null, "It worked");
 		}
 	}
+
 }

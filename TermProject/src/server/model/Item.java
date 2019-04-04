@@ -91,7 +91,7 @@ public class Item {
 	}
 	
 	public String toString () {
-		return itemId + " " + itemName + " " + itemQuantity + " " + itemPrice + "\n";
+		return itemId +"\t" + itemName + "\t" + itemQuantity + "\t" + itemPrice + "\n";
 	}
 
 }

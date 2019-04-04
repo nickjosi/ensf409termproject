@@ -32,11 +32,12 @@ public class Shop {
 		return inventory.toString();
 		
 	}
-	public String decreaseItem (String name) {
+	
+	public boolean decreaseItem (String name) {
 		if (inventory.manageItem(name) == null)
-			return "Could not decrease item quantity!\n";
+			return false;
 		else
-			return "Item quantity was decreased!\n";
+			return true;
 	}
 
 	public void listAllSuppliers() {
@@ -51,17 +52,16 @@ public class Shop {
 		// TODO Auto-generated method stub
 		Item theItem = inventory.searchForItem(name);
 		if (theItem == null)
-		     return "Item " + name + " could not be found!";
+		     return "\0";
 		else
-			 return outputItem (theItem);
-			
+			 return outputItem (theItem);	
 	}
 
 	public String getItem(int id) {
 		// TODO Auto-generated method stub
 		Item theItem = inventory.searchForItem(id);
 		if (theItem == null)
-		     return "Item number " + id + " could not be found!";
+		     return "\0";
 		else
 			return outputItem (theItem);
 			 
@@ -69,7 +69,7 @@ public class Shop {
 	}
 	
 	private String outputItem (Item theItem){
-		return "The item information is as follows: \n" + theItem;
+		return theItem.toString() +"\0";
 	}
 
 	public String getItemQuantity(String name) {

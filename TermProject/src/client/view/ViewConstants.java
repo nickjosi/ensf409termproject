@@ -20,6 +20,6 @@ public interface ViewConstants {
 	
 	public static final Font TITLE_FONT = new Font("Helvetica",Font.BOLD,40);
 	
-	public static final String TITLE = " \"The Tool Shop\"\n";
+	public static final String TITLE = " \"THIS IS A TOOL SHOP.\"\n";
 	
 }

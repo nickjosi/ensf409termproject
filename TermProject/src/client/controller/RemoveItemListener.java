@@ -4,11 +4,10 @@ import client.view.MainMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 
 /**
  * @author Carter Shaul/Nick Park
@@ -17,22 +16,21 @@ import javax.swing.table.DefaultTableModel;
  * 
  * This class provides the necessary methods to allow a user to remove a specified item from the inventory.   
  */
-public class RemoveItemListener implements ActionListener {
+public class RemoveItemListener extends GUIController implements ActionListener {
 
-	/**
-	 * A MainMenu object which is being listened to by this class. 
-	 */
-	private MainMenu menu;
-	
-	
+		
 	/**
 	 * Constructs a new object of type RemoveItemListener. 
 	 * @param frame The MainMenu object being listened to by this class. 
 	 */
-	public RemoveItemListener(MainMenu frame) {
-		menu = frame; 
+	public RemoveItemListener(MainMenu frame, Client user) {
+		super(frame,user);
+		frame.setRemoveItemListener(this);	
 	}
 	
+	/**
+	 * Removes the user selected items from the inventory. 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		int [] indices = menu.tableData.getSelectedRows();
 
@@ -63,7 +61,4 @@ public class RemoveItemListener implements ActionListener {
 			}	
 	}
 	
-	public void removeFromDataBase() {
-		//TODO do something to remove an entry from the DataBase  
-	}
 }

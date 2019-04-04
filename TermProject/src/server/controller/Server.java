@@ -57,21 +57,6 @@ public class Server {
 				
 			}
 			
-//				Player xPlayer = new Player(serverSocket.accept(), 'X');
-//				Player oPlayer = new Player(serverSocket.accept(), 'O');
-//				
-//				Referee ref = new Referee();
-//				ref.setxPlayer(xPlayer);
-//				ref.setoPlayer(oPlayer);
-//				
-//				Game game = new Game();
-//				game.appointReferee(ref);
-//				
-//				System.out.println("Two clients have been matched. "
-//						+ "Calling referee to start the game.");
-//				
-//				pool.execute(game);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			pool.shutdown();

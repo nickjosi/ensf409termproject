@@ -31,7 +31,6 @@ public class DatabaseController implements Runnable {
 	 * Writes to the socket output stream to communicate with the client.
 	 */
 	private PrintWriter socketOut;
-
 	
 	/**
 	 * Constructs a DatabaseController object for the given socket, and
@@ -47,11 +46,8 @@ public class DatabaseController implements Runnable {
 			socketOut = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			System.err.println(e.getStackTrace());
-		} finally {
-			sendString("Connected to a game. Waiting for opponent...");
 		}
-
-		
+	
 		ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 		readSuppliers(suppliers);
 		Inventory inventory = new Inventory(readItems(suppliers));
@@ -139,78 +135,69 @@ public class DatabaseController implements Runnable {
 
 	}
 
-	private void printMenuChoices() {
-		sendString("Please choose from one of the following options: ");
-		sendString("1. List all tools in the inventory.");
-		sendString("2. Search for tool by tool name.");
-		sendString("3. Search for tool by tool id.");
-		sendString("4. Check item quantity.");
-		sendString("5. Decrease item quantity.");
-		sendString("6. Print today's order.");
-		sendString("7. Quit.");
-		sendString("");
-		sendString("Please enter your selection: \0");
-	}
-
+	
+	/**
+	 * Reads client input choices and performs the selected request. 
+	 */
 	public void menu() {
 
 		while (true) {
 
-			printMenuChoices();
-
 			int choice = -1;
+			String[] data = null;
+
 			try {
-				choice = Integer.parseInt(socketIn.readLine());
-			} catch (NumberFormatException | IOException e) {
-				// TODO Auto-generated catch block
+				String command = socketIn.readLine();
+				if(command != null) {
+					data = command.split("\t");
+					choice = Integer.parseInt(data[0]);
+				}
+			}
+			catch(IOException e) {
 				e.printStackTrace();
 			}
-
+			
 			switch (choice) {
 
-			case 1:
-				listAllTools();
-				break;
-			case 2:
-				searchForItemByName();
-				break;
-			case 3:
-				searchForItemById();
-				break;
-			case 4:
-				checkItemQuantity();
-				break;
-			case 5:
-				decreaseItem();
-				break;
-			case 6:
-				printOrder();
-				break;
-			case 7:
-				sendString("\nGood Bye!");
-				sendString("QUIT");
-				return;
-			default:
-				sendString("\nInvalid selection Please try again!");
-				break;
-
-			}
-
+				case 1:
+					listAllTools();
+					break;
+				case 2:
+					searchForItemByName(data[1]);
+					break;
+				case 3:
+					searchForItemById(Integer.parseInt(data[1]));
+					break;
+				case 4:
+					checkItemQuantity();
+					break;
+				case 5:
+					decreaseItem(data[1]);
+					break;
+				case 6:
+					printOrder();
+					break;
+				case 7:
+					sendString("\nGood Bye!");
+					sendString("QUIT");
+					return;
+				default:
+					sendString("\nInvalid selection Please try again!");
+					break;
+			}						
 		}
-
+				
 	}
-	
+
 	private void listAllTools() {
 		sendString(shop.listAllItems());
 	}
 	
-	private void searchForItemByName() {
-		String name = getItemName();
+	private void searchForItemByName(String name) {
 		sendString(shop.getItem(name));
 	}
 	
-	private void searchForItemById() {
-		int id = getItemId();
+	private void searchForItemById(int id) {
 		sendString(shop.getItem(id));
 	}
 	
@@ -219,9 +206,15 @@ public class DatabaseController implements Runnable {
 		sendString(shop.getItemQuantity(name));
 	}
 	
-	private void decreaseItem() {
-		String name = getItemName();
-		sendString(shop.decreaseItem(name));
+	private void decreaseItem(String name) {
+		sendString(name);
+		boolean result = shop.decreaseItem(name);
+		if(result) {
+			sendString("true\0");
+		}
+		else {
+			sendString("false\0");
+		}	
 	}
 
 	private void printOrder() {

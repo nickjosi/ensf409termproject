@@ -52,12 +52,14 @@ public class Inventory {
 		}
 		return theItem;
 	}
+	
 	public void placeOrder (Item theItem){
 		OrderLine ol = theItem.placeOrder();
 		if (ol != null){
 			order.addOrderLine(ol);
 		}
 	}
+	
 	private Item decreaseItem (String name) {
 		
 		Item theItem = searchForItem (name);
@@ -79,9 +81,9 @@ public class Inventory {
 	public String toString () {
 		String str = "";
 		for (Item i: itemList) {
-			str += i;
+			str += i.toString();
 		}
-		return str;
+		return str + "\0";
 	}
 
 }
