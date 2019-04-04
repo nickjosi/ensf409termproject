@@ -48,6 +48,7 @@ public class Server {
 	 */
 	public void communicateWithClient() {
 		try {
+			
 			while(true) {
 				
 				DatabaseController db = new DatabaseController(serverSocket.accept());
@@ -55,22 +56,7 @@ public class Server {
 				//db.menu();
 				pool.execute(db);
 				
-			}
-			
-//				Player xPlayer = new Player(serverSocket.accept(), 'X');
-//				Player oPlayer = new Player(serverSocket.accept(), 'O');
-//				
-//				Referee ref = new Referee();
-//				ref.setxPlayer(xPlayer);
-//				ref.setoPlayer(oPlayer);
-//				
-//				Game game = new Game();
-//				game.appointReferee(ref);
-//				
-//				System.out.println("Two clients have been matched. "
-//						+ "Calling referee to start the game.");
-//				
-//				pool.execute(game);
+			}	
 			
 		} catch (Exception e) {
 			e.printStackTrace();

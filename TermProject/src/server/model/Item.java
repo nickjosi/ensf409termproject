@@ -13,7 +13,6 @@ public class Item {
 	
 	
 	public Item (int id, String name, int quanitiy, double price, Supplier sup) {
-		
 		itemId = id;
 		itemName = name;
 		itemQuantity = quanitiy;
@@ -28,8 +27,7 @@ public class Item {
 		    return true;	
 		}
 		else
-			return false;
-			
+			return false;		
 	}
 	
 	public OrderLine placeOrder (){

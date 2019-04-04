@@ -36,6 +36,8 @@ public class DatabaseController implements Runnable {
 	private Statement stmt;
 	private ResultSet rs;
 	
+	
+	
 	/**
 	 * Constructs a DatabaseController object for the given socket, and
 	 * loads the inventory and list of suppliers from the from text 
@@ -65,21 +67,36 @@ public class DatabaseController implements Runnable {
 			e.printStackTrace();
 		}
 
-		
+		// Get data from database
 		ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 		readSuppliers(suppliers);
 		Inventory inventory = new Inventory(readItems(suppliers));
 		shop = new Shop(inventory, suppliers);
 	}
 
+	
 	/**
-	 * Sends the specified String to the client and flushes the PrintWriter.
-	 * @param toSend the String to be sent
+	 * Reads the database and creates a list of suppliers.
+	 * @param suppliers the ArrayList of Supplier objects to be filled.
 	 */
-	public void sendString(String toSend) {
-		socketOut.println(toSend);
-		socketOut.flush();
+	private void readSuppliers(ArrayList<Supplier> suppliers) {
+
+		try {
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM supplierList";
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				System.out.println(rs.getString("supId") + " " + rs.getString("supName")
+						+ " " + rs.getString("supAddress") + " " + rs.getString("supContactName"));
+				suppliers.add(new Supplier(Integer.parseInt(rs.getString("supId")), rs.getString("supName"), 
+						rs.getString("supAddress"), rs.getString("supContactName")));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
+	
 
 	/**
 	 * Reads the database and creates a list of items which represents
@@ -109,6 +126,7 @@ public class DatabaseController implements Runnable {
 		}
 		return items;
 	}
+	
 
 	/**
 	 * Finds the supplier which matches the supplierID
@@ -122,32 +140,10 @@ public class DatabaseController implements Runnable {
 				theSupplier = s;
 				break;
 			}
-
 		}
 		return theSupplier;
 	}
 
-	/**
-	 * Reads the database and creates a list of suppliers.
-	 * @param suppliers the ArrayList of Supplier objects to be filled.
-	 */
-	private void readSuppliers(ArrayList<Supplier> suppliers) {
-
-		try {
-			stmt = conn.createStatement();
-			String query = "SELECT * FROM supplierList";
-			rs = stmt.executeQuery(query);
-			while(rs.next()) {
-				System.out.println(rs.getString("supId") + " " + rs.getString("supName")
-				+ " " + rs.getString("supAddress") + " " + rs.getString("supContactName"));
-				suppliers.add(new Supplier(Integer.parseInt(rs.getString("supId")), rs.getString("supName"), 
-						rs.getString("supAddress"), rs.getString("supContactName")));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
 
 	private void printMenuChoices() {
 		sendString("Please choose from one of the following options: ");
@@ -162,6 +158,7 @@ public class DatabaseController implements Runnable {
 		sendString("Please enter your selection: \0");
 	}
 
+	
 	public void menu() {
 
 		while (true) {
@@ -210,29 +207,35 @@ public class DatabaseController implements Runnable {
 
 	}
 	
+	
 	private void listAllTools() {
 		sendString(shop.listAllItems());
 	}
+	
 	
 	private void searchForItemByName() {
 		String name = getItemName();
 		sendString(shop.getItem(name));
 	}
 	
+	
 	private void searchForItemById() {
 		int id = getItemId();
 		sendString(shop.getItem(id));
 	}
+	
 	
 	private void checkItemQuantity() {
 		String name = getItemName();
 		sendString(shop.getItemQuantity(name));
 	}
 	
+	
 	private void decreaseItem() {
 		String name = getItemName();
 		sendString(shop.decreaseItem(name));
 	}
+	
 
 	private void printOrder() {
 		sendString(shop.printOrder());
@@ -250,8 +253,8 @@ public class DatabaseController implements Runnable {
 			e.printStackTrace();
 		}
 		return line;
-
 	}
+	
 
 	private int getItemId() {
 		sendString("Please enter the ID number of the item: \0");
@@ -263,6 +266,17 @@ public class DatabaseController implements Runnable {
 		}
 		return -1;
 	}
+	
+	
+	/**
+	 * Sends the specified String to the client and flushes the PrintWriter.
+	 * @param toSend the String to be sent
+	 */
+	public void sendString(String toSend) {
+		socketOut.println(toSend);
+		socketOut.flush();
+	}
+	
 
 	@Override
 	public void run() {
