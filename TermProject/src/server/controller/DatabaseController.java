@@ -164,12 +164,14 @@ public class DatabaseController implements Runnable {
 					break;
 				case 2:
 					searchForItemByName(data[1]);
+					//getItemSupplier(data[1]);
 					break;
 				case 3:
 					searchForItemById(Integer.parseInt(data[1]));
+					//getItemSupplier(Integer.parseInt(data[1]));
 					break;
 				case 4:
-					checkItemQuantity();
+					removeItem(data[1]);
 					break;
 				case 5:
 					decreaseItem(data[1]);
@@ -195,15 +197,23 @@ public class DatabaseController implements Runnable {
 	
 	private void searchForItemByName(String name) {
 		sendString(shop.getItem(name));
+		
 	}
 	
 	private void searchForItemById(int id) {
 		sendString(shop.getItem(id));
 	}
 	
-	private void checkItemQuantity() {
-		String name = getItemName();
-		sendString(shop.getItemQuantity(name));
+	private void getItemSupplier(String name) {
+		sendString(shop.getItemSupplier(name));
+	}
+	
+	private void getItemSupplier(int id) {
+		sendString(shop.getItemSupplier(id));
+	}
+	
+	private void removeItem(String name) {
+		shop.removeItem(name);
 	}
 	
 	private void decreaseItem(String name) {

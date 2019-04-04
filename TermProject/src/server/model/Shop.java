@@ -39,6 +39,14 @@ public class Shop {
 		else
 			return true;
 	}
+	
+	public void removeItem(String name) {
+		Item theItem = inventory.searchForItem(name);
+		
+		if(theItem != null) {
+			inventory.removeItem(theItem);
+		}
+	}
 
 	public void listAllSuppliers() {
 		// TODO Auto-generated method stub
@@ -56,6 +64,15 @@ public class Shop {
 		else
 			 return outputItem (theItem);	
 	}
+	
+	public String getItemSupplier(String name) {
+		Item theItem = inventory.searchForItem(name);
+		if(theItem == null) {
+			return "\0";
+		}
+		else
+			return outputSupplier(theItem);
+	}
 
 	public String getItem(int id) {
 		// TODO Auto-generated method stub
@@ -64,8 +81,15 @@ public class Shop {
 		     return "\0";
 		else
 			return outputItem (theItem);
-			 
-		
+	}
+	
+	public String getItemSupplier(int id) {
+		Item theItem = inventory.searchForItem(id);
+		if(theItem == null) {
+			return "\0";
+		}
+		else
+			return outputSupplier(theItem);
 	}
 	
 	private String outputItem (Item theItem){
@@ -81,6 +105,10 @@ public class Shop {
 			return "The quantity of Item " + name + " is: " + quantity + "\n";
 	}
 
+	private String outputSupplier(Item theItem) {
+		return theItem.getTheSupplier().toString() + "\0";
+	}
+	
 	public String printOrder() {
 		// TODO Auto-generated method stub
 		

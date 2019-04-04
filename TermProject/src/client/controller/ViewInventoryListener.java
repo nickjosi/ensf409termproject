@@ -1,12 +1,7 @@
 package client.controller;
 
 import client.view.MainMenu;
-
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * 
  * This class provides the necessary methods to update the display of the inventory to the user from the click of a button.  
  */
-public class ViewInventoryListener extends GUIController implements ActionListener {
+public class ViewInventoryListener extends GUIController {
 	
 	/**
 	 * Constructs a new object of TypeInventoryListener. 
@@ -37,7 +32,7 @@ public class ViewInventoryListener extends GUIController implements ActionListen
 		String [] headers = {"Item ID", "Item Name", "Quantity in Stock", "Price ($)"};
 		
 		
-		menu.tableData.setModel(new DefaultTableModel(headers,0) {
+		menu.getTable().setModel(new DefaultTableModel(headers,0) {
 			@Override
 			public boolean isCellEditable(int row,int col) {
 				return false;

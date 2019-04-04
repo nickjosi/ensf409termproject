@@ -1,27 +1,24 @@
 package client.controller;
 
 import client.view.MainMenu;
-
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Carter Shaul/Nick Park
- * @version 1
+ * @version 2
  * @since 30/03/2019
  * 
  * This class provides the necessary methods to allow a user to remove a specified item from the inventory.   
  */
-public class RemoveItemListener extends GUIController implements ActionListener {
+public class RemoveItemListener extends GUIController {
 
 		
 	/**
 	 * Constructs a new object of type RemoveItemListener. 
 	 * @param frame The MainMenu object being listened to by this class. 
+	 * @param user The client interacting with the MainMenu object. 
 	 */
 	public RemoveItemListener(MainMenu frame, Client user) {
 		super(frame,user);
@@ -32,33 +29,25 @@ public class RemoveItemListener extends GUIController implements ActionListener 
 	 * Removes the user selected items from the inventory. 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		int [] indices = menu.tableData.getSelectedRows();
+		int [] indices = menu.getTable().getSelectedRows();
 
 		if(indices.length != 0) {
-			int selection = JOptionPane.showConfirmDialog(null, "Are you sure you would like to remove these " + menu.tableData.getSelectedRowCount() + " item(s)","Confirmation", JOptionPane.YES_NO_OPTION);
+			int selection = JOptionPane.showConfirmDialog(null, "Are you sure you would like to remove these " + menu.getTable().getSelectedRowCount() + " item(s)","Confirmation", JOptionPane.YES_NO_OPTION);
 		
 			if(selection == JOptionPane.YES_OPTION && indices.length != 0) {
 						
 				int rowCorrection = 0;
-				try {
+
 				for(int i: indices) {
-					((DefaultTableModel)menu.tableData.getModel()).removeRow(i-rowCorrection);
+					client.getSocketOut().println("4\t" + menu.getTable().getValueAt(i-rowCorrection, 1));
+					((DefaultTableModel)menu.getTable().getModel()).removeRow(i-rowCorrection);
 					rowCorrection++;
 				}
-				}
-				catch(NullPointerException ex) {
-					System.out.println("Exception 1");
-				}
-				
-				try {
-				((DefaultTableModel)menu.tableData.getModel()).fireTableRowsDeleted(indices[0], indices[indices.length - 1]);
-				}
-				catch(NullPointerException ex2) {
-					System.out.println("Exception 2");
-				}
-			}
-			
-			}	
+
+				((DefaultTableModel)menu.getTable().getModel()).fireTableRowsDeleted(indices[0], indices[indices.length - 1]);
+		
+			}		
+		}	
 	}
 	
 }

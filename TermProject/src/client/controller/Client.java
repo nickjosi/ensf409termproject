@@ -6,9 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import javax.swing.table.DefaultTableModel;
-
 import client.view.MainMenu;
 
 /**

@@ -1,14 +1,12 @@
 package client.view;
 
-import java.awt.CardLayout;
-
+import client.controller.*;
 import java.awt.Container;
-
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,8 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
-import client.controller.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+
+
 
 /**
  * @author Carter Shaul/Nick Park
@@ -43,12 +46,12 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Multiple JPanel objects which act as container for different displays to the user. 
 	 */
-	private JPanel north,south,center;
+	private JPanel north,south,center,bar;
 	
 	/**
 	 * A JTable object which holds all of the data displayed to the user. 
 	 */
-	public JTable tableData;
+	private JTable tableData;
 	
 	/**
 	 * A JScrollPane object which allows the user to scroll through the data being displayed.  
@@ -58,7 +61,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Two JLabel objects which display the title of the frame to the user. 
 	 */
-	private JLabel title;
+	private JLabel title,searchLabel;
 	
 	/**
 	 * A SearchBar object which the user can enter item info into and receive search results which are displayed to the JFrame. 
@@ -83,14 +86,30 @@ public class MainMenu extends JFrame implements ViewConstants {
 				e.printStackTrace();
 		}	
 		
+		//The following block of code was taken from http://blog.marcnuri.com/jtable-alternate-row-background/
+		tableData = new JTable() {
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+				Component returnComp = super.prepareRenderer(renderer, row, col);
+				Color altColor = new Color(204,229,255);
+				Color defaultColor = Color.WHITE;
+				if(!returnComp.getBackground().equals(getSelectionBackground())){
+					Color bg = (row % 2 == 0 ? altColor : defaultColor);
+					returnComp.setBackground(bg);
+					bg = null;
+				}
+				return returnComp;
+			}
+		};
+		
 		title = new JLabel(TITLE,JLabel.CENTER);//Initialize member variables
-		tableData = new JTable();
+		searchLabel = new JLabel("Item Search");
 		scroll = new JScrollPane(tableData,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		searchBar = new SearchBar();
 		north = new JPanel();
 		south = new JPanel();
 		center = new JPanel(new CardLayout());
-		
+		bar = new JPanel();
+
 		viewInventory = new JButton("View Inventory"); //Initialize buttons
 		addItem = new JButton("Add Item");
 		removeItem = new JButton("Remove Item(s)");
@@ -100,13 +119,17 @@ public class MainMenu extends JFrame implements ViewConstants {
 		addItem.setVisible(false); //Set initial visibility of certain components
 		removeItem.setVisible(false);
 		backToLogin.setVisible(false);
-		searchBar.setVisible(false);
+		bar.setVisible(false);
 		decreaseItem.setVisible(false);
 
 		title.setIcon(new ImageIcon("HammerAndShovel.png")); //Set location of text and tool shop logo
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setVerticalTextPosition(JLabel.CENTER);
 	
+		bar.add(searchLabel); //Compose search bar panel
+		bar.add(searchBar);
+		bar.setMaximumSize(new Dimension(250,40));
+		
 		south.setLayout(new BoxLayout(south,BoxLayout.LINE_AXIS)); //Building and setting preferences for south panel which contains all the button objects
 		south.setPreferredSize(PANEL_SIZE);
 		south.add(Box.createRigidArea(EDGE_SPACING));
@@ -118,13 +141,13 @@ public class MainMenu extends JFrame implements ViewConstants {
 		south.add(Box.createHorizontalGlue());
 		south.add(viewInventory);		
 		south.add(Box.createRigidArea(EDGE_SPACING));
-		
+			
 		north.setPreferredSize(PANEL_SIZE); //Building and setting preferences for north panel which contains the searchBar object
 		north.setLayout(new BoxLayout(north,BoxLayout.LINE_AXIS));
 		north.add(Box.createRigidArea(EDGE_SPACING));
 		north.add(backToLogin);
 		north.add(Box.createHorizontalGlue());
-		north.add(searchBar);
+		north.add(bar);
 		north.add(Box.createRigidArea(EDGE_SPACING));
 
 		center.add(title,"Title");
@@ -136,7 +159,9 @@ public class MainMenu extends JFrame implements ViewConstants {
 		c.add("Center", center);
 				
 		title.setFont(TITLE_FONT); //Setting the font of the title displayed in the frame
+		searchLabel.setFont(SEARCH_FONT);
 		
+		setPreferredSize(PREFERRED_FRAME_SIZE);
 		setMinimumSize(MINIMUM_FRAME_SIZE); //Setting JFrame preferences
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
 		setLocationRelativeTo(null);
@@ -191,8 +216,26 @@ public class MainMenu extends JFrame implements ViewConstants {
 		backToLogin.addActionListener(listener);
 	}
 	
+	/**
+	 * Assigns an action listener to the decreaseItem data member
+	 * @param listener The ActionListener that is being assigned to the data member. 
+	 */
 	public void setDecreaseItemListener(DecreaseItemListener listener) {
 		decreaseItem.addActionListener(listener);
+	}
+	
+	/**
+	 * Provides the handle on the decreaseItem button. 
+	 */
+	public JButton getDecreaseButton() {
+		return decreaseItem;
+	}
+	
+	/**
+	 * Provides the handle on the removeItem button. 
+	 */
+	public JButton getRemoveButton() {
+		return removeItem;
 	}
 	
 	/**
@@ -206,7 +249,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 	 * Toggles the visibility of the searchBar. 
 	 */
 	public void setSearchBarVisibility(boolean b) {
-		searchBar.setVisible(b);
+		bar.setVisible(b);
 	}
 	
 	/**
@@ -236,6 +279,13 @@ public class MainMenu extends JFrame implements ViewConstants {
 	public void showItemList() {
 		CardLayout layout = (CardLayout) center.getLayout();
 		layout.show(center,"Table");
+	}
+	
+	/**
+	 * Provides a handle on the JTable data member. 
+	 */
+	public JTable getTable() {
+		return tableData;
 	}
 	
 	/**

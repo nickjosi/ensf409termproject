@@ -73,6 +73,16 @@ public class Inventory {
 		return null;
 		
 	}
+	
+	public void removeItem(Item theItem) {
+		for(int i = 0; i < itemList.size(); i++) {
+			if(itemList.get(i).getItemName().equals(theItem.getItemName())){
+				itemList.remove(theItem);
+				return;
+			}
+		}
+	}
+	
 
 	public String printOrder() {
 		return order.toString();

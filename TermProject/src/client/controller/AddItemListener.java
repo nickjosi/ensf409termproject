@@ -1,13 +1,11 @@
+//***NOTE THIS FUNCTIONALITY WAS NOT USED OR IMPLEMENTED IN THIS MILESTONE***//
+
 package client.controller;
 
+import client.view.MainMenu;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-import client.view.MainMenu;
 
 
 /**
@@ -18,7 +16,7 @@ import client.view.MainMenu;
  * This class provides the necessary methods to allow a user to input the information for a new inventory item by entering data into
  * separate text fields at the click of a button. 
  */
-public class AddItemListener extends GUIController implements ActionListener{
+public class AddItemListener extends GUIController{
 
 	//TODO Make this method add the item the user inputs to the inventory. If the item already exists or if the item ID's are the same than
 	//inform the user they must re-enter. 

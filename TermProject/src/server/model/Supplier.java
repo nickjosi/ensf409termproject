@@ -69,7 +69,7 @@ public class Supplier {
 	}
 	
 	public String toString () {
-		return supName + " Supplier ID: " + supId+ "\n";
+		return supName + "\t" + supId + "\t" + supContactName + "\t" + supAddress + "\n";
 		
 	}
 	
