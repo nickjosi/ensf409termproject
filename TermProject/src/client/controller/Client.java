@@ -11,7 +11,7 @@ import client.view.MainMenu;
 /**
  * Client class for playing the TicTacToe game.
  * 
- * @author NickPark
+ * @author Nick Park and Carter Shaul
  * @version 1.0
  * @since March 20, 2019
  */
@@ -61,6 +61,7 @@ public class Client {
 		} catch (IOException e) {
 			System.out.println("Unable to create new client.");
 			System.out.println(e.getMessage());
+			System.exit(0);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class AddItemListener extends GUIController{
 	
 	public AddItemListener(MainMenu frame, Client user) {
 		super(frame,user);
-		frame.setAddItemListener(this);
+		//frame.setAddItemListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

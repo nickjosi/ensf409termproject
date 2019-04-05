@@ -44,8 +44,8 @@ public class Inventory {
 		return null;
 	}
 	
-	public Item manageItem (String name) {
-		Item theItem = decreaseItem (name);
+	public Item manageItem (int id) {
+		Item theItem = decreaseItem (id);
 		
 		if (theItem != null){
 			placeOrder (theItem);
@@ -60,9 +60,9 @@ public class Inventory {
 		}
 	}
 	
-	private Item decreaseItem (String name) {
+	private Item decreaseItem (int id) {
 		
-		Item theItem = searchForItem (name);
+		Item theItem = searchForItem (id);
 		
 		if (theItem == null)
 			return null;

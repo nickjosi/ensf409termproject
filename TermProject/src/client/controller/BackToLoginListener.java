@@ -29,7 +29,7 @@ public class BackToLoginListener extends GUIController{
 	public void actionPerformed(ActionEvent e) {
 		menu.showLoginScreen();
 		menu.setBackButtonVisibility(false);
-		menu.setAddButtonVisibility(false);
+		//menu.setAddButtonVisibility(false);
 		menu.setRemoveButtonVisibility(false);
 		menu.setSearchBarVisibility(false);
 		menu.setDecreaseButtonVisibiity(false);

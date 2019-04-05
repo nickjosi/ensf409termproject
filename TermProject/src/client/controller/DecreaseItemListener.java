@@ -35,16 +35,18 @@ public class DecreaseItemListener extends GUIController {
 		int row = menu.getTable().getSelectedRow();
 		
 		if(row != -1) {
-			String name = (String)menu.getTable().getValueAt(row, 1); //Get the name of the item selected
-			int quantity = Integer.parseInt((String)menu.getTable().getValueAt(row, 2)); //Get current value of quantity in stock
-			client.getSocketOut().println("5\t" + name); //Send request to server 
+			String id = (String)menu.getTable().getValueAt(row, 0); //Get the ID of the item selected
+			client.getSocketOut().println("5\t" + id); //Send request to server 
+			
 			ArrayList<String> result = client.communicateWithServer();
 			
-			if(result.get(1).equals("true")){
+			if(result.get(0).equals("true")){
 				System.out.println("here");
-				menu.getTable().setValueAt(Integer.toString(quantity-1), row, 2);
+				int newQuantity = Integer.parseInt(result.get(1));
+				menu.getTable().setValueAt(Integer.toString(newQuantity), row, 2);
 			}
 			else {
+				menu.getTable().setValueAt("0", row, 2);
 				JOptionPane.showMessageDialog(null, "Not enough of this item remains in stock","Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}

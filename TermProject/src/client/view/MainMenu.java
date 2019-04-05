@@ -41,7 +41,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Multiple JButton objects which the user can interact with. 
 	 */
-	private JButton viewInventory,addItem,removeItem,backToLogin,decreaseItem;
+	private JButton viewInventory,removeItem,backToLogin,decreaseItem; //addItem
 	
 	/**
 	 * Multiple JPanel objects which act as container for different displays to the user. 
@@ -111,12 +111,12 @@ public class MainMenu extends JFrame implements ViewConstants {
 		bar = new JPanel();
 
 		viewInventory = new JButton("View Inventory"); //Initialize buttons
-		addItem = new JButton("Add Item");
+		//addItem = new JButton("Add Item");
 		removeItem = new JButton("Remove Item(s)");
 		backToLogin = new JButton("Back to Login");
 		decreaseItem = new JButton("Decrease Quantity of Item");
 		
-		addItem.setVisible(false); //Set initial visibility of certain components
+		//addItem.setVisible(false); //Set initial visibility of certain components
 		removeItem.setVisible(false);
 		backToLogin.setVisible(false);
 		bar.setVisible(false);
@@ -133,7 +133,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 		south.setLayout(new BoxLayout(south,BoxLayout.LINE_AXIS)); //Building and setting preferences for south panel which contains all the button objects
 		south.setPreferredSize(PANEL_SIZE);
 		south.add(Box.createRigidArea(EDGE_SPACING));
-		south.add(addItem);
+		//south.add(addItem);
 		south.add(Box.createRigidArea(BUTTON_SPACING));
 		south.add(removeItem);
 		south.add(Box.createRigidArea(BUTTON_SPACING));
@@ -180,10 +180,10 @@ public class MainMenu extends JFrame implements ViewConstants {
 	 * Assigns an action listener to the addItem data member
 	 * @param listener The ActionListener that is being assigned to the data member
 	 */
-	public void setAddItemListener(AddItemListener listener) {
-		addItem.addActionListener(listener);
-	}
-	
+//	public void setAddItemListener(AddItemListener listener) {
+//		addItem.addActionListener(listener);
+//	}
+//	
 	/**
 	 * Assigns a window listener to the parent JFrame
 	 * @param listener The WindowListener that is being assigned
@@ -262,9 +262,9 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Toggles the visibility of the addItem button
      */
-	public void setAddButtonVisibility(boolean b) {
-		addItem.setVisible(b);
-	}
+//	public void setAddButtonVisibility(boolean b) {
+//		addItem.setVisible(b);
+//	}
 	
 	/**
 	 * Toggles the visibility of the decreaseItem button

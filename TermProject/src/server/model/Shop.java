@@ -75,8 +75,8 @@ public class Shop {
 		}
 	}
 	
-	public boolean decreaseItem (String name) {
-		if (inventory.manageItem(name) == null)
+	public boolean decreaseItem (int id) {
+		if (inventory.manageItem(id) == null)
 			return false;
 		else
 			return true;
@@ -101,13 +101,6 @@ public class Shop {
 			return "The quantity of Item " + name + " is: " + quantity + "\n";
 	}
 	
-//	private String outputItem (Item theItem){
-//		return theItem.toString();
-//	}
-
-//	private String outputSupplier(Item theItem) {
-//		return theItem.getTheSupplier().toString() + "\0";
-//	}
 	
 	public String printOrder() {
 		// TODO Auto-generated method stub
