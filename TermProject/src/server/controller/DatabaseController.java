@@ -32,6 +32,8 @@ public class DatabaseController implements Runnable {
 	 */
 	private PrintWriter socketOut;
 	
+	
+	
 	/**
 	 * Constructs a DatabaseController object for the given socket, and
 	 * loads the inventory and list of suppliers from the from text 
@@ -53,15 +55,30 @@ public class DatabaseController implements Runnable {
 		Inventory inventory = new Inventory(readItems(suppliers));
 		shop = new Shop(inventory, suppliers);
 	}
-
+	
+		
+	
 	/**
-	 * Sends the specified String to the client and flushes the PrintWriter.
-	 * @param toSend the String to be sent
+	 * Reads the input file and creates a list of suppliers.
+	 * @param suppliers the ArrayList of Supplier objects to be filled.
 	 */
-	public void sendString(String toSend) {
-		socketOut.println(toSend);
-		socketOut.flush();
+	private void readSuppliers(ArrayList<Supplier> suppliers) {
+
+		try {
+			FileReader fr = new FileReader("suppliers.txt");
+			BufferedReader br = new BufferedReader(fr);
+
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				String[] temp = line.split(";");
+				suppliers.add(new Supplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
+	
 
 	/**
 	 * Reads the input file and creates a list of items which represents
@@ -114,27 +131,6 @@ public class DatabaseController implements Runnable {
 		return theSupplier;
 	}
 
-	/**
-	 * Reads the input file and creates a list of suppliers.
-	 * @param suppliers the ArrayList of Supplier objects to be filled.
-	 */
-	private void readSuppliers(ArrayList<Supplier> suppliers) {
-
-		try {
-			FileReader fr = new FileReader("suppliers.txt");
-			BufferedReader br = new BufferedReader(fr);
-
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				String[] temp = line.split(";");
-				suppliers.add(new Supplier(Integer.parseInt(temp[0]), temp[1], temp[2], temp[3]));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
-
 	
 	/**
 	 * Reads client input choices and performs the selected request. 
@@ -164,11 +160,9 @@ public class DatabaseController implements Runnable {
 					break;
 				case 2:
 					searchForItemByName(data[1]);
-					//getItemSupplier(data[1]);
 					break;
 				case 3:
 					searchForItemById(Integer.parseInt(data[1]));
-					//getItemSupplier(Integer.parseInt(data[1]));
 					break;
 				case 4:
 					removeItem(data[1]);
@@ -192,26 +186,17 @@ public class DatabaseController implements Runnable {
 	}
 
 	private void listAllTools() {
-		sendString(shop.listAllItems());
+		sendString(shop.listAllItems() + "\0");
 	}
 	
 	private void searchForItemByName(String name) {
-		sendString(shop.getItem(name));
-		
+		sendString(shop.getItem(name) + shop.getItemSupplier(name) + "\0");
 	}
 	
 	private void searchForItemById(int id) {
-		sendString(shop.getItem(id));
+		sendString(shop.getItem(id) + shop.getItemSupplier(id) + "\0");
 	}
-	
-	private void getItemSupplier(String name) {
-		sendString(shop.getItemSupplier(name));
-	}
-	
-	private void getItemSupplier(int id) {
-		sendString(shop.getItemSupplier(id));
-	}
-	
+		
 	private void removeItem(String name) {
 		shop.removeItem(name);
 	}
@@ -232,29 +217,39 @@ public class DatabaseController implements Runnable {
 	}
 
 	
-	private String getItemName() {
-		sendString("Please enter the name of the item: \0");
-
-		String line = "";
-		try {
-			line = socketIn.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return line;
-
-	}
-
-	private int getItemId() {
-		sendString("Please enter the ID number of the item: \0");
-		try {
-			return Integer.parseInt(socketIn.readLine());
-		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return -1;
+//	private String getItemName() {
+//		sendString("Please enter the name of the item: \0");
+//
+//		String line = "";
+//		try {
+//			line = socketIn.readLine();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return line;
+//
+//	}
+//
+//	private int getItemId() {
+//		sendString("Please enter the ID number of the item: \0");
+//		try {
+//			return Integer.parseInt(socketIn.readLine());
+//		} catch (NumberFormatException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return -1;
+//	}
+	
+	
+	/**
+	 * Sends the specified String to the client and flushes the PrintWriter.
+	 * @param toSend the String to be sent
+	 */
+	public void sendString(String toSend) {
+		socketOut.println(toSend);
+		socketOut.flush();
 	}
 
 	@Override

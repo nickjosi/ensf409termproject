@@ -18,7 +18,7 @@ public class Item {
 		itemName = name;
 		itemQuantity = quanitiy;
 		itemPrice = price;
-		sup = theSupplier; 
+		theSupplier = sup;
 		setAlreadyOrdered(false);
 	}
 	
@@ -91,7 +91,7 @@ public class Item {
 	}
 	
 	public String toString () {
-		return itemId +"\t" + itemName + "\t" + itemQuantity + "\t" + itemPrice + "\n";
+		return itemId +"\t" + itemName + "\t" + itemQuantity + "\t" + itemPrice + "\t";
 	}
 
 }

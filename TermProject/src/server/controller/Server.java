@@ -52,7 +52,6 @@ public class Server {
 				
 				DatabaseController db = new DatabaseController(serverSocket.accept());
 				System.out.println("A new client has connected.");
-				//db.menu();
 				pool.execute(db);
 				
 			}

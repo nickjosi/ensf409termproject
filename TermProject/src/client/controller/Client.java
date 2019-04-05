@@ -44,7 +44,7 @@ public class Client {
 	 */
 	private GUIController menuController;
 
-	
+
 	/**
 	 * Constructs a Client for a Server with the specified server
 	 * name and port.
@@ -71,41 +71,42 @@ public class Client {
 	public ArrayList<String> communicateWithServer() {
 		ArrayList<String> response = new ArrayList<String>();
 		try {
-				String read = "";
-		
-				while (true) {
-		
-					read = socketIn.readLine();
-					if(read.contains("\0")) {
-						read = read.replace("\0","");
-						response.add(read);
-						break;
-					}
-					if(read.equals("QUIT")) {
-						break;
-					}
+			String read = "";
+
+			while (true) {
+
+				read = socketIn.readLine();
+				if(read.contains("\0")) {
+					read = read.replace("\0","");
 					response.add(read);
+					break;
 				}
+				if(read.equals("QUIT")) {
+					break;
+				}
+				response.add(read);
 			}
-			catch (Exception e) {
-				System.out.println("Error communicating with server.");
-				e.printStackTrace();
-//				System.out.println(e.printStackTrace());
-				try {
-					stdIn.close();
-					socket.close();
-				}
-				catch(IOException ex) {
-					System.out.println("Unable to close IO streams.");
-				}
+		}
+		catch (Exception e) {
+			System.out.println("Error communicating with server.");
+			e.printStackTrace();
+			try {
+				stdIn.close();
+				socket.close();
 			}
+			catch(IOException ex) {
+				System.out.println("Unable to close IO streams.");
+			}
+		}
+		
 		for(String s: response) {
 			System.out.println(s);
 		}
+		
 		return response;
 	}
-	
-	
+
+
 	/**
 	 * Gets the handle on the output PrintWriter object. 
 	 * @return The PrintWriter object used to output information to the socket. 
@@ -116,7 +117,7 @@ public class Client {
 
 	public static void main(String[] args) throws IOException {
 		MainMenu frame = new MainMenu();
-		
+
 		Client client = new Client("localhost", 9898,frame);
 		GUIController search = new SearchBarListener(frame,client);
 		GUIController view = new ViewInventoryListener(frame,client);
@@ -124,8 +125,8 @@ public class Client {
 		GUIController add = new AddItemListener(frame,client);
 		GUIController remove = new RemoveItemListener(frame,client);
 		GUIController decrease = new DecreaseItemListener(frame,client);
-		
+
 		CloseListener close = new CloseListener(frame,client);
-		
+
 	}
 }

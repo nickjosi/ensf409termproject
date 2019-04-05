@@ -83,17 +83,17 @@ public class Inventory {
 		}
 	}
 	
-
 	public String printOrder() {
 		return order.toString();
 	}
 	
+	
 	public String toString () {
 		String str = "";
 		for (Item i: itemList) {
-			str += i.toString();
+			str += i.toString() + "\n";
 		}
-		return str + "\0";
+		return str;
 	}
 
 }
