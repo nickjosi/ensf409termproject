@@ -40,7 +40,7 @@ public class DecreaseItemListener extends GUIController {
 			client.getSocketOut().println("5\t" + name); //Send request to server 
 			ArrayList<String> result = client.communicateWithServer();
 			
-			if(result.get(1).equals("true")){
+			if(result.get(0).equals("true")){
 				System.out.println("here");
 				menu.getTable().setValueAt(Integer.toString(quantity-1), row, 2);
 			}

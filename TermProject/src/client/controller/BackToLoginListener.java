@@ -27,12 +27,10 @@ public class BackToLoginListener extends GUIController{
 	 * (ie. Login screen or inventory screen).
 	 */
 	public void actionPerformed(ActionEvent e) {
-		menu.showLoginScreen();
-		menu.setBackButtonVisibility(false);
-		menu.setAddButtonVisibility(false);
-		menu.setRemoveButtonVisibility(false);
-		menu.setSearchBarVisibility(false);
-		menu.setDecreaseButtonVisibiity(false);
+		menu.showHomeScreen();
+		menu.setNorthVisibility(false);
+		menu.setSouthVisibility(false);
+		menu.getInventoryButton().setText("View Inventory");
 	}
 
 }

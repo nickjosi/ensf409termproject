@@ -43,13 +43,7 @@ public class ViewInventoryListener extends GUIController {
 		client.getSocketOut().println("1");
 		menu.showItemList();
 		menu.updateTable(client.communicateWithServer());
-		menu.setBackButtonVisibility(true);
-		menu.setRemoveButtonVisibility(true);
-		menu.setAddButtonVisibility(true);
-		menu.setSearchBarVisibility(true);
-		menu.setDecreaseButtonVisibiity(true);
-		JButton source = (JButton) e.getSource();
-		source.setText("Refresh Inventory");	
+		menu.getInventoryButton().setText("Refresh Inventory");	
 	}
 	
 }

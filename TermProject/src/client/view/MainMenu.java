@@ -4,7 +4,6 @@ import client.controller.*;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import javax.swing.Box;
@@ -16,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -23,8 +23,6 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-
-
 
 /**
  * @author Carter Shaul/Nick Park
@@ -41,12 +39,12 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Multiple JButton objects which the user can interact with. 
 	 */
-	private JButton viewInventory,addItem,removeItem,backToLogin,decreaseItem;
+	private JButton viewInventory,removeItem,backToLogin,decreaseItem,login;
 	
 	/**
 	 * Multiple JPanel objects which act as container for different displays to the user. 
 	 */
-	private JPanel north,south,center,bar;
+	private JPanel north,south,center,bar,homeScreen,titlePanel,loginPanel;
 	
 	/**
 	 * A JTable object which holds all of the data displayed to the user. 
@@ -61,7 +59,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 	/**
 	 * Two JLabel objects which display the title of the frame to the user. 
 	 */
-	private JLabel title,searchLabel;
+	private JLabel title,searchLabel,usernameLabel,passwordLabel;
 	
 	/**
 	 * A SearchBar object which the user can enter item info into and receive search results which are displayed to the JFrame. 
@@ -72,7 +70,12 @@ public class MainMenu extends JFrame implements ViewConstants {
 	 * A Container object which provides a container handle on the entire JFrame. 
 	 */
 	private Container c;
-		
+	
+	/**
+	 * TextField objects which take user input data fields and grant access to the DataBase. 
+	 */
+	private JTextField username,password;
+	
 	/**
 	 * Constructs a new object of type MainMenu with all the necessary data fields
 	 */
@@ -103,38 +106,73 @@ public class MainMenu extends JFrame implements ViewConstants {
 		
 		title = new JLabel(TITLE,JLabel.CENTER);//Initialize member variables
 		searchLabel = new JLabel("Item Search");
+		passwordLabel = new JLabel("Password");
+		usernameLabel = new JLabel("Username");
 		scroll = new JScrollPane(tableData,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		searchBar = new SearchBar();
 		north = new JPanel();
 		south = new JPanel();
 		center = new JPanel(new CardLayout());
 		bar = new JPanel();
+		homeScreen = new JPanel();
+		titlePanel = new JPanel();
+		loginPanel = new JPanel();
+		username = new JTextField();
+		password = new JTextField();
+		usernameLabel = new JLabel("Username");
+		passwordLabel = new JLabel("Password");
 
 		viewInventory = new JButton("View Inventory"); //Initialize buttons
-		addItem = new JButton("Add Item");
 		removeItem = new JButton("Remove Item(s)");
 		backToLogin = new JButton("Back to Login");
 		decreaseItem = new JButton("Decrease Quantity of Item");
+		login = new JButton("Login");
 		
-		addItem.setVisible(false); //Set initial visibility of certain components
-		removeItem.setVisible(false);
-		backToLogin.setVisible(false);
-		bar.setVisible(false);
-		decreaseItem.setVisible(false);
+		south.setVisible(false); //Set initial visibility of certain components
+		north.setVisible(false);
 
 		title.setIcon(new ImageIcon("HammerAndShovel.png")); //Set location of text and tool shop logo
 		title.setHorizontalTextPosition(JLabel.CENTER);
 		title.setVerticalTextPosition(JLabel.CENTER);
+		
+		titlePanel.setLayout(new BoxLayout(titlePanel,BoxLayout.LINE_AXIS));
+		titlePanel.add(Box.createHorizontalGlue());
+		titlePanel.add(title);
+		titlePanel.add(Box.createHorizontalGlue());
+		
+		username.setPreferredSize(TEXT_FIELD_SIZE);
+		username.setMaximumSize(TEXT_FIELD_SIZE);
+		password.setPreferredSize(TEXT_FIELD_SIZE);
+		password.setMaximumSize(TEXT_FIELD_SIZE);
+		
+		loginPanel.setLayout(new BoxLayout(loginPanel,BoxLayout.LINE_AXIS));
+		loginPanel.add(Box.createHorizontalGlue());
+		loginPanel.add(usernameLabel);
+		loginPanel.add(Box.createRigidArea(BUTTON_SPACING));
+		loginPanel.add(username);
+		loginPanel.add(Box.createRigidArea(BUTTON_SPACING));
+		loginPanel.add(passwordLabel);
+		loginPanel.add(Box.createRigidArea(BUTTON_SPACING));
+		loginPanel.add(Box.createRigidArea(BUTTON_SPACING));
+		loginPanel.add(password);
+		loginPanel.add(Box.createHorizontalGlue());
+		
+		homeScreen.setLayout(new BoxLayout(homeScreen,BoxLayout.Y_AXIS));
+		homeScreen.add(Box.createVerticalGlue());
+		homeScreen.add(titlePanel);
+		homeScreen.add(Box.createVerticalStrut(VERTICAL_SPACE));
+		homeScreen.add(loginPanel);
+		homeScreen.add(Box.createVerticalStrut(VERTICAL_SPACE));
+		homeScreen.add(login,Box.CENTER_ALIGNMENT);
+		homeScreen.add(Box.createVerticalGlue());
 	
 		bar.add(searchLabel); //Compose search bar panel
 		bar.add(searchBar);
 		bar.setMaximumSize(new Dimension(250,40));
-		
+				
 		south.setLayout(new BoxLayout(south,BoxLayout.LINE_AXIS)); //Building and setting preferences for south panel which contains all the button objects
 		south.setPreferredSize(PANEL_SIZE);
 		south.add(Box.createRigidArea(EDGE_SPACING));
-		south.add(addItem);
-		south.add(Box.createRigidArea(BUTTON_SPACING));
 		south.add(removeItem);
 		south.add(Box.createRigidArea(BUTTON_SPACING));
 		south.add(decreaseItem);
@@ -149,8 +187,8 @@ public class MainMenu extends JFrame implements ViewConstants {
 		north.add(Box.createHorizontalGlue());
 		north.add(bar);
 		north.add(Box.createRigidArea(EDGE_SPACING));
-
-		center.add(title,"Title");
+		
+		center.add(homeScreen,"Home"); //
 		center.add(scroll,"Table");
 
 		c = getContentPane(); //Getting handle of content pane and adding all panels
@@ -159,7 +197,9 @@ public class MainMenu extends JFrame implements ViewConstants {
 		c.add("Center", center);
 				
 		title.setFont(TITLE_FONT); //Setting the font of the title displayed in the frame
-		searchLabel.setFont(SEARCH_FONT);
+		searchLabel.setFont(OTHER_FONT);
+		passwordLabel.setFont(OTHER_FONT);
+		usernameLabel.setFont(OTHER_FONT);
 		
 		setPreferredSize(PREFERRED_FRAME_SIZE);
 		setMinimumSize(MINIMUM_FRAME_SIZE); //Setting JFrame preferences
@@ -174,14 +214,6 @@ public class MainMenu extends JFrame implements ViewConstants {
 	 */
 	public void setSearchBarListener(SearchBarListener listener) { 
 		searchBar.addActionListener(listener);
-	}
-	
-	/**
-	 * Assigns an action listener to the addItem data member
-	 * @param listener The ActionListener that is being assigned to the data member
-	 */
-	public void setAddItemListener(AddItemListener listener) {
-		addItem.addActionListener(listener);
 	}
 	
 	/**
@@ -225,10 +257,11 @@ public class MainMenu extends JFrame implements ViewConstants {
 	}
 	
 	/**
-	 * Provides the handle on the decreaseItem button. 
+	 * Assigns an action listener to the login button. 
+	 * @param listener The ActionListener that is being assigned to the data member. 
 	 */
-	public JButton getDecreaseButton() {
-		return decreaseItem;
+	public void setLoginListener(LoginListener listener) {
+		login.addActionListener(listener);
 	}
 	
 	/**
@@ -239,38 +272,19 @@ public class MainMenu extends JFrame implements ViewConstants {
 	}
 	
 	/**
-	 * Toggles the visibility of the backToLogin button. 
+	 * Toggles the visibility of all components in the north panel of the frame
+	 * @param b
 	 */
-	public void setBackButtonVisibility(boolean b) {
-		backToLogin.setVisible(b);
+	public void setNorthVisibility(boolean b) {
+		north.setVisible(b);
 	}
 	
 	/**
-	 * Toggles the visibility of the searchBar. 
+	 * Toggles the visibility of all components in the south panel of the frame
+	 * @param b
 	 */
-	public void setSearchBarVisibility(boolean b) {
-		bar.setVisible(b);
-	}
-	
-	/**
-	 * Toggles the visibility of the removeItem button. 
-	 */
-	public void setRemoveButtonVisibility(boolean b) {
-		removeItem.setVisible(b);
-	}
-	
-	/**
-	 * Toggles the visibility of the addItem button
-     */
-	public void setAddButtonVisibility(boolean b) {
-		addItem.setVisible(b);
-	}
-	
-	/**
-	 * Toggles the visibility of the decreaseItem button
-	 */
-	public void setDecreaseButtonVisibiity(boolean b) {
-		decreaseItem.setVisible(b);
+	public void setSouthVisibility(boolean b) {
+		south.setVisible(b);
 	}
 	
 	/**
@@ -288,17 +302,26 @@ public class MainMenu extends JFrame implements ViewConstants {
 		return tableData;
 	}
 	
+	public JButton getInventoryButton() {
+		return viewInventory;
+	}
+	
 	/**
 	 * Displays the login screen to the user
 	 */
-	public void showLoginScreen() {
+	public void showHomeScreen() {
 		CardLayout layout = (CardLayout) center.getLayout();
-		layout.show(center, "Title");
+		layout.show(center, "Home");
+	}
+	
+	public void showTableScreen() {
+		CardLayout layout = (CardLayout) center.getLayout();
+		layout.show(center, "Table");
 	}
 	
 	/**
 	 * Updates the displayed JTable with values pulled from the database. 
-	 * @param data
+	 * @param data The list of string representations of items being inserted into the table. 
 	 */
 	public void updateTable(ArrayList<String> data) {
 		DefaultTableModel table = (DefaultTableModel) tableData.getModel();
@@ -307,5 +330,15 @@ public class MainMenu extends JFrame implements ViewConstants {
 			String[] temp = data.get(i).split("\t");
 			table.addRow(new Object[] {temp[0],temp[1],temp[2],temp[3]});
 		}
+	}
+	
+	/**
+	 * Adds a new row of user input data to the inventory
+	 * @param data The string representation of the item being added to the table. 
+	 */
+	public void addToTable(String data) {
+		DefaultTableModel table = (DefaultTableModel) tableData.getModel();
+		String [] temp = data.split(" ");
+		table.addRow(new Object[] {temp[0],temp[1],temp[2],temp[3]});
 	}
 }

@@ -90,7 +90,6 @@ public class Client {
 			catch (Exception e) {
 				System.out.println("Error communicating with server.");
 				e.printStackTrace();
-//				System.out.println(e.printStackTrace());
 				try {
 					stdIn.close();
 					socket.close();
@@ -99,9 +98,6 @@ public class Client {
 					System.out.println("Unable to close IO streams.");
 				}
 			}
-		for(String s: response) {
-			System.out.println(s);
-		}
 		return response;
 	}
 	
@@ -121,11 +117,9 @@ public class Client {
 		GUIController search = new SearchBarListener(frame,client);
 		GUIController view = new ViewInventoryListener(frame,client);
 		GUIController back = new BackToLoginListener(frame,client);
-		GUIController add = new AddItemListener(frame,client);
 		GUIController remove = new RemoveItemListener(frame,client);
 		GUIController decrease = new DecreaseItemListener(frame,client);
-		
-		CloseListener close = new CloseListener(frame,client);
-		
+		GUIController login = new LoginListener(frame,client);
+		CloseListener close = new CloseListener(frame,client);	
 	}
 }

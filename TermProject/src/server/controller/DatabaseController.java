@@ -176,7 +176,7 @@ public class DatabaseController implements Runnable {
 				case 5:
 					decreaseItem(data[1]);
 					break;
-				case 6:
+				case 6: 
 					printOrder();
 					break;
 				case 7:
@@ -217,7 +217,6 @@ public class DatabaseController implements Runnable {
 	}
 	
 	private void decreaseItem(String name) {
-		sendString(name);
 		boolean result = shop.decreaseItem(name);
 		if(result) {
 			sendString("true\0");
