@@ -39,7 +39,7 @@ public class RemoveItemListener extends GUIController {
 				int rowCorrection = 0;
 
 				for(int i: indices) {
-					client.getSocketOut().println("4\t" + menu.getTable().getValueAt(i-rowCorrection, 1));
+					client.getSocketOut().println("4\t" + menu.getTable().getValueAt(i-rowCorrection, 0));
 					((DefaultTableModel)menu.getTable().getModel()).removeRow(i-rowCorrection);
 					rowCorrection++;
 				}

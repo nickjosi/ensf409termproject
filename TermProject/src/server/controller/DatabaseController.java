@@ -236,8 +236,21 @@ public class DatabaseController implements Runnable {
 	 * Removes item from the inventory and database.
 	 * @param name the name of the item
 	 */
-	private void removeItem(String name) {
-		shop.removeItem(name);
+	private void removeItem(String stringID) {
+		try {
+			
+			int id = Integer.parseInt(stringID);
+
+			String delete = "DELETE FROM inventory WHERE itemId=?";
+			PreparedStatement pStat = conn.prepareStatement(delete);
+			pStat.setInt(1, id);
+			pStat.executeUpdate();
+			
+			shop.removeItem(id);
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -251,7 +264,7 @@ public class DatabaseController implements Runnable {
 			
 			int id = Integer.parseInt(stringID);
 
-			String query = "SELECT * FROM inventory WHERE itemID=?";
+			String query = "SELECT * FROM inventory WHERE itemId=?";
 			PreparedStatement pStat = conn.prepareStatement(query);
 			pStat.setInt(1, id);
 			rs = pStat.executeQuery();

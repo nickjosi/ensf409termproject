@@ -67,8 +67,8 @@ public class Shop {
 	}
 	
 	
-	public void removeItem(String name) {
-		Item theItem = inventory.searchForItem(name);
+	public void removeItem(int id) {
+		Item theItem = inventory.searchForItem(id);
 		
 		if(theItem != null) {
 			inventory.removeItem(theItem);
