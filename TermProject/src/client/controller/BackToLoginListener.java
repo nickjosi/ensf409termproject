@@ -2,6 +2,7 @@ package client.controller;
 
 import client.view.MainMenu;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 /**
  * @author Carter Shaul/Nick Park
@@ -27,12 +28,11 @@ public class BackToLoginListener extends GUIController{
 	 * (ie. Login screen or inventory screen).
 	 */
 	public void actionPerformed(ActionEvent e) {
-		menu.showLoginScreen();
-		menu.setBackButtonVisibility(false);
-		//menu.setAddButtonVisibility(false);
-		menu.setRemoveButtonVisibility(false);
-		menu.setSearchBarVisibility(false);
-		menu.setDecreaseButtonVisibiity(false);
+		menu.showHomeScreen();
+		menu.clearTable();
+		menu.setNorthVisibility(false);
+		menu.setSouthVisibility(false);
+		menu.getInventoryButton().setText("View Inventory");
 	}
 
 }

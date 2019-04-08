@@ -123,10 +123,9 @@ public class Client {
 		GUIController search = new SearchBarListener(frame,client);
 		GUIController view = new ViewInventoryListener(frame,client);
 		GUIController back = new BackToLoginListener(frame,client);
-		GUIController add = new AddItemListener(frame,client);
 		GUIController remove = new RemoveItemListener(frame,client);
 		GUIController decrease = new DecreaseItemListener(frame,client);
-
+		GUIController login = new LoginListener(frame,client);
 		CloseListener close = new CloseListener(frame,client);
 
 	}

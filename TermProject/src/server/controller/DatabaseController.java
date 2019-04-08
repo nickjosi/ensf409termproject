@@ -68,7 +68,7 @@ public class DatabaseController implements Runnable {
 		// Initialize connection to database
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop"
 					+ "?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "ensf409");
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -192,7 +192,7 @@ public class DatabaseController implements Runnable {
 				decreaseItem(data[1]);
 				break;
 			case 6:
-				printOrder();
+				validateLogin(data[1], data[2]);
 				break;
 			case 7:
 				sendString("\nGood Bye!");
@@ -302,6 +302,31 @@ public class DatabaseController implements Runnable {
 			
 		} catch(SQLException e)  {
 			System.out.println("Problem decreasing item quantity");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Checks the database if the username and password entered by the user
+	 * are valid, and returns the appropriate success/fail message to the client.
+	 * @param user the username
+	 * @param pass the password
+	 */
+	private void validateLogin(String user, String pass) {
+		try {
+			String query = "SELECT * FROM users WHERE username=? and password=?";
+			PreparedStatement pStat = conn.prepareStatement(query);
+			pStat.setString(1, user);
+			pStat.setString(2, pass);
+			rs = pStat.executeQuery();
+			if(rs.next()) {
+				sendString("success\0");
+			}
+			else {
+				sendString("fail\0");
+			}
+		} catch(SQLException e) {
+			System.out.println("Problem validating login");
 			e.printStackTrace();
 		}
 	}
