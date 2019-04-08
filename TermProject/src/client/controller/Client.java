@@ -119,7 +119,7 @@ public class Client {
 	public static void main(String[] args) throws IOException {
 		MainMenu frame = new MainMenu();
 
-		Client client = new Client("localhost", 9898,frame);
+		Client client = new Client("10.13.61.65", 9898,frame); //Create socket between Server machine and client machine 
 		GUIController search = new SearchBarListener(frame,client);
 		GUIController view = new ViewInventoryListener(frame,client);
 		GUIController back = new BackToLoginListener(frame,client);
