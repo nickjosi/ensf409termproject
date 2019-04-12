@@ -80,11 +80,6 @@ public class DatabaseController implements Runnable {
 			DriverManager.registerDriver(driver);
 			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			
-			//Class.forName("com.mysql.cj.jdbc.Driver");
-			//conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop"
-					//+ "?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", "root", "ensf409");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
