@@ -8,11 +8,11 @@ import javax.swing.JOptionPane;
 import client.view.MainMenu;
 
 /**
+ * This class provides the necessary methods for user login functionality.
+ * 
  * @author Carter Shaul/Nick Park
  * @version 2
  * @since 30/03/2019
- * 
- * This class provides the necessary methods for user login functionality.
  */
 public class LoginListener extends GUIController {
 

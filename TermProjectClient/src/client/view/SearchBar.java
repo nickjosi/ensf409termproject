@@ -13,11 +13,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 /**
+ * This class sets the size and appearance of a search bar.
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 29/03/2019
- * 
- * This class sets the size and appearance of a search bar.
  */
 public class SearchBar extends JTextField {
 		

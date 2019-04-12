@@ -9,12 +9,12 @@ import javax.swing.JPanel;
 import client.view.MainMenu;
 
 /**
+ * This class contains the necessary methods to allow a user to search for any item in the inventory by the item's ID or 
+ * name by entering it into a text field. 
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 30/03/2019
- * 
- * This class contains the necessary methods to allow a user to search for any item in the inventory by the item's ID or 
- * name by entering it into a text field. 
  */
 public class SearchBarListener extends GUIController {
 

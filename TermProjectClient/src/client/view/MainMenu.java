@@ -25,14 +25,14 @@ import java.awt.Color;
 import java.awt.Component;
 
 /**
- * @author Carter Shaul/Nick Park
- * @version 1
- * @since 29/03/2019
- * 
  * This class contains the member variables necessary to construct a user interface representing a 
  * retail store's inventory system.
  * All of the buttons and interactive components have listeners assigned to them so that a user may interact
  * with the display as desired. 
+ * 
+ * @author Carter Shaul/Nick Park
+ * @version 1
+ * @since 29/03/2019
  */
 public class MainMenu extends JFrame implements ViewConstants {
 
@@ -266,6 +266,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 		
 	/**
 	 * Provides the handle on the viewInventory button. 
+	 * @return the viewInventory button
 	 */
 	public JButton getViewInventoryButton() {
 		return viewInventory;
@@ -273,14 +274,23 @@ public class MainMenu extends JFrame implements ViewConstants {
 	
 	/**
 	 * Provides the handle on the removeItem button. 
+	 * @return the removeItem button
 	 */
 	public JButton getRemoveButton() {
 		return removeItem;
 	}
 	
 	/**
+	 * Provides a handle on the view inventory button
+	 * @return the viewInventory button
+	 */
+	public JButton getInventoryButton() {
+		return viewInventory;
+	}
+	
+	/**
 	 * Toggles the visibility of all components in the north panel of the frame
-	 * @param b
+	 * @param b true to set as visible, false to remove visibility
 	 */
 	public void setNorthVisibility(boolean b) {
 		north.setVisible(b);
@@ -288,7 +298,7 @@ public class MainMenu extends JFrame implements ViewConstants {
 	
 	/**
 	 * Toggles the visibility of all components in the south panel of the frame
-	 * @param b
+	 * @param b true to set as visible, false to remove visibility
 	 */
 	public void setSouthVisibility(boolean b) {
 		south.setVisible(b);
@@ -304,16 +314,10 @@ public class MainMenu extends JFrame implements ViewConstants {
 	
 	/**
 	 * Provides a handle on the JTable data member. 
+	 * @return the JTable
 	 */
 	public JTable getTable() {
 		return tableData;
-	}
-	
-	/**
-	 * Provides a handle on the view inventory button
-	 */
-	public JButton getInventoryButton() {
-		return viewInventory;
 	}
 	
 	/**

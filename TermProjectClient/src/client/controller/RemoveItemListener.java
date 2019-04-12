@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * This class provides the necessary methods to allow a user to remove a specified item from the inventory.
+ * 
  * @author Carter Shaul/Nick Park
  * @version 2
  * @since 30/03/2019
- * 
- * This class provides the necessary methods to allow a user to remove a specified item from the inventory.   
  */
 public class RemoveItemListener extends GUIController {
 

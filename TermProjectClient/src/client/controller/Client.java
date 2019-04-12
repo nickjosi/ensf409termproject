@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import client.view.MainMenu;
 
 /**
- * Client class for playing the TicTacToe game.
+ * Client class for playing the Tool Shop inventory system.
  * 
  * @author Nick Park and Carter Shaul
  * @version 1.0
@@ -50,8 +50,9 @@ public class Client {
 	 * name and port.
 	 * @param serverName name of the Server to be connected to
 	 * @param portNumber port number of the Server to be connected to
+	 * @param frame the graphical interface the user is interacting with
 	 */
-	public Client(String serverName, int portNumber,MainMenu frame) {
+	public Client(String serverName, int portNumber, MainMenu frame) {
 		try {
 			socket = new Socket(serverName, portNumber);
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -68,6 +69,7 @@ public class Client {
 	/**
 	 * Gets input from the user, sends the input to the Server, 
 	 * and prints out the response from the Server.
+	 * @return the response from the server as an ArrayList of Strings
 	 */
 	public ArrayList<String> communicateWithServer() {
 		ArrayList<String> response = new ArrayList<String>();

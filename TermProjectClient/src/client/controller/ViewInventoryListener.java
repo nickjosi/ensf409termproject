@@ -6,17 +6,18 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * This class provides the necessary methods to update the display of the inventory to the user from the click of a button.  
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 30/03/2019
- * 
- * This class provides the necessary methods to update the display of the inventory to the user from the click of a button.  
  */
 public class ViewInventoryListener extends GUIController {
 	
 	/**
 	 * Constructs a new object of TypeInventoryListener. 
-	 * @param frame The MainMenu object the ViewInventoryListener listens to. 
+	 * @param frame The MainMenu object the ViewInventoryListener listens to.
+	 * @param user the Client
 	 */
 	public ViewInventoryListener(MainMenu frame,Client user) {
 		super(frame,user);
@@ -25,9 +26,9 @@ public class ViewInventoryListener extends GUIController {
 
 	/**
 	 * Sets the JTable object in the MainMenu to a read only DefaultTableModel with the most up to date Inventory information from 
-	 * the data base. 
-	 * @Override
+	 * the data base.
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		String [] headers = {"Item ID", "Item Name", "Quantity in Stock", "Price ($)"};
 		

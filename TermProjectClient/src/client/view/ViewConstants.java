@@ -4,12 +4,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 /**
+ * This interface provides dimensions,fonts and other constants that are used to organize,separate and 
+ * enhance components within a JFrame object.
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 29/03/2019
- * 
- * This interface provides dimensions,fonts and other constants that are used to organize,separate and 
- * enhance components within a JFrame object.
  */
 public interface ViewConstants {
 

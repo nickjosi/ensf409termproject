@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * This class provides the functionality for a user to decrease an items quantity that currently exists
+ * in their inventory. 
  * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 01/04/2019
- * 
- * This class provides the functionality for a user to decrease an items quantity that currently exists
- * in their inventory. 
  */
 public class DecreaseItemListener extends GUIController {
 
 	/**
 	 * Constructs a new object of type DecreaseItemListener. 
 	 * @param frame The MainMenu object being listened to by this class. 
+	 * @param user the Client
 	 */
 	public DecreaseItemListener(MainMenu frame, Client user) {
 		super(frame,user);

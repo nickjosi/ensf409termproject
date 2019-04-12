@@ -147,6 +147,7 @@ public class DatabaseController implements Runnable {
 	/**
 	 * Finds the supplier which matches the supplierID
 	 * @param supplierId the ID to be searched for
+	 * @param suppliers the list of suppliers to be searched
 	 * @return theSupplier the Supplier with the given ID
 	 */
 	private Supplier findSupplier(int supplierId, ArrayList<Supplier> suppliers) {
@@ -285,7 +286,7 @@ public class DatabaseController implements Runnable {
 
 	/**
 	 * Removes item from the inventory and database.
-	 * @param name the name of the item
+	 * @param stringID the name of the item
 	 */
 	private void removeItem(String stringID) {
 		try {

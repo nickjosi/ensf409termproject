@@ -6,12 +6,12 @@ import java.awt.event.WindowEvent;
 import client.view.MainMenu;
 
 /**
+ * This class sends the necessary information to the server to inform it that a client has closed(disconnected) their
+ * user interface and quit the application. 
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 01/04/2019
- * 
- * This class sends the necessary information to the server to inform it that a client has closed(disconnected) their
- * user interface and quit the application. 
  */
 public class CloseListener extends WindowAdapter {
 

@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 /**
+ * This class provides the functionality of the "Back To Login" button displayed to the user. 
+ * 
  * @author Carter Shaul/Nick Park
  * @version 1
  * @since 01/04/2019
- *
- * This class provides the functionality of the "Back To Login" button displayed to the user. 
  */
 public class BackToLoginListener extends GUIController{
 	

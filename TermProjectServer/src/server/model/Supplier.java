@@ -103,7 +103,7 @@ public class Supplier {
 
 	/**
 	 * Gets the name of the contact for the Supplier.
-	 * @return
+	 * @return supContactName
 	 */
 	public String getSupContactName() {
 		return supContactName;
